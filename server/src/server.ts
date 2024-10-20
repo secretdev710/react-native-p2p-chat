@@ -31,7 +31,7 @@ const io = new Server(server, {
 io.on('connection', function (socket) {
 
     socket.on('join', (userName) => {
-        console.log(userName + " connected");
+        console.log(userName + "has connected");
         let userId = socket.id;
         userList.push({ userName, userId });
         socket.emit('set id', userId);
