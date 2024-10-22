@@ -5,7 +5,7 @@ const initialState = {
     userName: "",
     passWord: null,
     email: null,
-    avatarImg: null
+    avatarImg: ""
 }
 
 const UserInfoReducer = (state: userInfoType = initialState, action : any) => {

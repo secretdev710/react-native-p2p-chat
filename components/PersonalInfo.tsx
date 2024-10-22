@@ -53,7 +53,7 @@ const PersonalInfo = ({ onClosed }: PersonalInfoProps) => {
                     <ImageChooser onChangeImage={(image) => setImage(image)} />
                     <Pressable onPress={
                         () => {
-                            dispatch(SetUserInfo({ userName: name }));
+                            dispatch(SetUserInfo({ userName: name, avatarImage: image }));
                             if (socket)
                                 socket.emit("join", name);
                             navigation.navigate(
