@@ -39,8 +39,10 @@ io.on('connection', function (socket) {
     })
 
     socket.on('chat message', function (data) {
-        const { receiverId, message, senderId, timeStamp } = data;
-        socket.to(receiverId).emit("new message", { senderId, message, timeStamp })
+        const { receiverId, message, senderId } = data;
+        const timeStamp = Date.now();
+        socket.emit("new message", { senderId, message, timeStamp });
+        socket.to(receiverId).emit("new message", { senderId, message, timeStamp });
     });
 
     socket.on('disconnect', () => {

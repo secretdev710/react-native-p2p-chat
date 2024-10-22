@@ -24,7 +24,7 @@ type UserListRouteProp = RouteProp<RootStackParamList, 'Chat'>;
 const Chat = () => {
     const [chatInput, setChatInput] = useState("");
     const [chatItems, setChatItems] = useState<ChatItem[]>([]);
-    const route = useRoute<UserListRouteProp>(); 
+    const route = useRoute<UserListRouteProp>();
     const { userName, partnerId, partnerName } = route.params.item;
 
     const { socket } = useSocket();
@@ -34,22 +34,11 @@ const Chat = () => {
             const messageData = {
                 senderId: socket.id,
                 receiverId: partnerId,
-                message: chatInput.trim(),
-                timeStamp: Date.now(),
+                message: chatInput.trim()
             };
 
             socket.emit('chat message', messageData);
 
-            setChatItems(prevItems => [
-                ...prevItems,
-                {
-                    id: `id_${messageData.timeStamp}`,
-                    text: messageData.message,
-                    image: "",
-                    timeStamp: messageData.timeStamp,
-                    by: userName,
-                },
-            ]);
             setChatInput('');
         }
     };
@@ -58,6 +47,7 @@ const Chat = () => {
         if (socket) {
             const handleMessage = (data: { message: string; timeStamp: number; senderId: string }) => {
                 const { message, timeStamp, senderId } = data;
+                console.log(data);
                 if (senderId === partnerId) {
                     setChatItems(prevItems => [
                         ...prevItems,
@@ -67,6 +57,18 @@ const Chat = () => {
                             image: "",
                             timeStamp,
                             by: partnerName,
+                        },
+                    ]);
+                }
+                else if (senderId === socket.id) {
+                    setChatItems(prevItems => [
+                        ...prevItems,
+                        {
+                            id: `id_${timeStamp}`,
+                            text: message,
+                            image: "",
+                            timeStamp,
+                            by: userName,
                         },
                     ]);
                 }
