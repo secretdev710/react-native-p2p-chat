@@ -3,6 +3,9 @@ import http from 'http';
 import cors from 'cors';
 import { Server } from 'socket.io';
 
+const models = require('./models/userModel');
+
+
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;

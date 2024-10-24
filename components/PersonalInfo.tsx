@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Image, ImageBackground, Pressable, Text, TextInput, View } from "react-native";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
-import { useSelector, useDispatch } from "react-redux";
-import { io, Socket } from 'socket.io-client';
+import { useDispatch } from "react-redux";
 
 import Styles from './Styles';
 import ImageChooser from "./ImageChooser";
 import { SetUserInfo } from "../action/userInfo";
-import { RootState, AppDispatch } from '../redux/store';
+import { AppDispatch } from '../redux/store';
 import { useSocket } from "../utils/SocketContex";
 
 type PersonalInfoProps = {

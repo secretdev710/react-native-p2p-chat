@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import PersonalInfo from './components/PersonalInfo';
 import { Provider } from "react-redux";
-import Styles from './components/Styles';
+
+import PersonalInfo from './components/PersonalInfo';
 import Chat from "./components/Chat";
 import UserList from "./components/UserList";
+import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import ResetPasswordScreen from "./screens/ResetPasswordScreen";
+
 import { store } from "./redux/store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SplashScreen from 'expo-splash-screen';
@@ -72,7 +73,10 @@ export default function App() {
     <SocketProvider>
       <Provider store={store}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="PersonalInfo">
+          <Stack.Navigator initialRouteName="LoginScreen">
+            <Stack.Screen name="LoginScreen" component={() => <LoginScreen />} />
+            <Stack.Screen name="RegisterScreen" component={() => <RegisterScreen />} />
+            <Stack.Screen name="ResetPasswordScreen" component={() => <ResetPasswordScreen />} />
             <Stack.Screen name="PersonalInfo" component={() => <PersonalInfo onClosed={() => { onSubmitPersonalInfo }} />} />
             <Stack.Screen name="UserList" component={() => <UserList />} />
             <Stack.Screen name="Chat" component={() => <Chat />} />
