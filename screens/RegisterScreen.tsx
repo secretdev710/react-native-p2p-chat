@@ -39,10 +39,27 @@ export default function RegisterScreen() {
       setPassword({ ...password, error: passwordError });
       return;
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "HomeScreen" }],
-    });
+
+    fetch("http://192.168.132.72:3000/user/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userName: name.value,
+        email: email.value,
+        password: password.value,
+      }),
+    })
+      .then((data) => {
+        alert("User created successfully");
+        navigation.navigate("LoginScreen");
+        console.log(data);
+      })
+      .catch((error) => {
+        alert(error);
+        console.error(error);
+      });
   };
 
   return (
@@ -54,7 +71,7 @@ export default function RegisterScreen() {
         label="Name"
         returnKeyType="next"
         value={name.value}
-        onChangeText={(text : string) => setName({ value: text, error: "" })}
+        onChangeText={(text: string) => setName({ value: text, error: "" })}
         error={!!name.error}
         errorText={name.error}
       />
@@ -62,7 +79,7 @@ export default function RegisterScreen() {
         label="Email"
         returnKeyType="next"
         value={email.value}
-        onChangeText={(text : string) => setEmail({ value: text, error: "" })}
+        onChangeText={(text: string) => setEmail({ value: text, error: "" })}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
@@ -74,7 +91,7 @@ export default function RegisterScreen() {
         label="Password"
         returnKeyType="done"
         value={password.value}
-        onChangeText={(text : string) => setPassword({ value: text, error: "" })}
+        onChangeText={(text: string) => setPassword({ value: text, error: "" })}
         error={!!password.error}
         errorText={password.error}
         secureTextEntry
@@ -84,7 +101,7 @@ export default function RegisterScreen() {
         onPress={onSignUpPressed}
         style={{ marginTop: 24 }}
       >
-        Next
+        Sign Up
       </Button>
       <View style={styles.row}>
         <Text>I already have an account !</Text>

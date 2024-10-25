@@ -3,8 +3,11 @@ import http from 'http';
 import cors from 'cors';
 import { Server } from 'socket.io';
 
-const models = require('./models/userModel');
+import router from './routers/index';
 
+const connectDB = require('./models/index');
+
+connectDB();
 
 const app = express();
 const server = http.createServer(app);
@@ -20,6 +23,7 @@ let userList: User[] = [];
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use("/",router);
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');

@@ -1,7 +1,16 @@
-mongoose.connect("mongodb://localhost:27017", {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-})
-    .then(() => console.log("Connected to MongoDB"))
-    .catch((err : any) => console.log(err));
+const mongoose = require('mongoose');
+
+const connectDB = async () => { 
+    try { 
+        await mongoose.connect("mongodb://localhost:27017/chat", {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+        console.log("MongoDB connected");
+    } catch (error) {
+        console.error(error);
+        process.exit(1);
+    }
+};
+
+module.exports = connectDB;

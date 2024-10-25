@@ -5,6 +5,8 @@ import { Text } from "react-native-paper";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 
+import { useDispatch } from "react-redux";
+
 import Background from "../components/Background";
 import Logo from "../components/Logo";
 import Header from "../components/Header";
@@ -32,6 +34,7 @@ export default function LoginScreen() {
   const [password, setPassword] = useState({ value: "", error: "" });
 
   const navigation = useNavigation<LoginScreenProps>();
+  const dispatch = useDispatch();
 
   const onLoginPressed = () => {
     const emailError = emailValidator(email.value);
@@ -41,10 +44,23 @@ export default function LoginScreen() {
       setPassword({ ...password, error: passwordError });
       return;
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "HomeScreen" }],
-    });
+    fetch("http://192.168.132.72:3000/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+      })
+    }).then((data) => {
+      alert("User logged in successfully");
+      navigation.navigate("HomeScreen");
+      console.log(data);
+    }).catch((error) => {
+      alert(error);
+      console.error(error);
+    })
   };
 
   return (
